@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const patientSchema = new mongoose.Schema({
     name: {
         type: String,
-        reqired: true,
+        required: true,
         unique: true
     },
     age: {
@@ -20,7 +20,6 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-
 })
 
 export default patient = mongoose.model('patient',patientSchema);

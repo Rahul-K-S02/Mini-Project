@@ -1,5 +1,7 @@
 import express from "express";
+import dotenv from "dotenv";
 import connectDB from "./dbConfig/db.js";
+dotenv.config();
 
 // Connect to MongoDB
 connectDB();

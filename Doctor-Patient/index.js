@@ -2,13 +2,23 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 // import bcrypt from "bcryptjs";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import { urlencoded } from "express";
-
-
+// import { urlencoded } from "express";
+import { adminRouter } from "./routes/admin.js";
+import {admin} from "./models/admin.js";
+import { type } from "os";
 dotenv.config();
+// Database connection
+try {
+  await mongoose.connect(process.env.MONGO_URI);
+  console.log("✅ MongoDB connected successfully!");
+} catch (err) {
+  console.error("❌ MongoDB connection failed:", err);
+}
+
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,19 +28,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(express.json());
 // app.use(cookieParser());
 app.set("view engine", "ejs");
 // app.set("views", path.join(__dirname, "views"));
-
-// Database connection
-try {
-  await mongoose.connect(process.env.MONGO_URI);
-  console.log("✅ MongoDB connected successfully!");
-} catch (err) {
-  console.error("❌ MongoDB connection failed:", err);
-}
 
 // Routes
 app.get("/", (req, res) => {
@@ -39,15 +42,21 @@ app.get("/", (req, res) => {
 
 // Admin Login
 app.post("/admin", async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
+  const response = await admin.find()
+  console.log(response)
   try {
     // const admin = await Admin.findOne({ email });
     // if (!admin) return res.status(404).send("❌ Admin not found!");
-
+    if(email=="sagar@gmail.com" && password=="asdf") {
+      res.cookie('admin',JSON.stringify(email,password)).redirect('/adminPage');
+    } else {
+      res.json({status:400,valid:"Invalid Email!"})
+    }
     // const isMatch = await bcrypt.compare(password, admin.password);
     // if (!isMatch) return res.status(401).send("❌ Invalid credentials");
-
-    res.send("✅ Admin login successful!");
+    
   } catch (error) {
     console.error(error);
     res.status(500).send("⚠️ Server error during admin login");
@@ -82,6 +91,8 @@ app.get("/patientVerify", async (req, res) => {
     res.status(500).send("⚠️ Error verifying patient");
   }
 });
+
+app.use('/adminPage',adminRouter);
 
 // Server listen
 app.listen(PORT,

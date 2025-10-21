@@ -22,16 +22,6 @@ const doctorSchema = new mangoose.Schema({
     type: String,
     required: true,
   },
-
-    DOB: {
-    type: String,
-    required: true,
-  },
-
-    Age: {
-    type: Number,
-    required: true,
-  },
   
     Password: {
     type: String,
@@ -80,16 +70,6 @@ const doctorSchema = new mangoose.Schema({
 
   Hospitalemail: {
     type: String,
-    required: true,
-  },
-
-  latitude: {
-    type: Number,
-    required: true,
-  },
-  
-  longitude: {
-    type: Number,
     required: true,
   },
 

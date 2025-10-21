@@ -7,7 +7,7 @@ const doctorSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        reqired: true,
+        required: true,
         unique: true
     },
     password: {
@@ -20,7 +20,12 @@ const doctorSchema = new mongoose.Schema({
     age: {
         type:Number
     },
+    status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+  },
     
 })
 
-export default doctor = mongoose.model('doctor',doctorSchema);
+export const doctor = mongoose.model('doctor',doctorSchema);
