@@ -7,8 +7,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 // import { urlencoded } from "express";
 import { adminRouter } from "./routes/admin.js";
-import {admin} from "./models/admin.js";
-import { type } from "os";
+import { admin } from "./models/admin.js";
+import { doctor } from "./models/doctor.js";
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import doctorRouter from "./routes/doctor.js";
+import generateCode from "./services/uniqueID.js";
 dotenv.config();
 // Database connection
 try {
@@ -17,8 +21,11 @@ try {
 } catch (err) {
   console.error("❌ MongoDB connection failed:", err);
 }
-
-
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET, // Click 'View API Keys' above to copy your API secret
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +33,17 @@ const PORT = process.env.PORT || 5000;
 // Fix __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "public");
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -44,19 +62,20 @@ app.get("/", (req, res) => {
 app.post("/admin", async (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
-  const response = await admin.find()
-  console.log(response)
+  const response = await admin.find();
+  console.log(response);
   try {
     // const admin = await Admin.findOne({ email });
     // if (!admin) return res.status(404).send("❌ Admin not found!");
-    if(email=="sagar@gmail.com" && password=="asdf") {
-      res.cookie('admin',JSON.stringify(email,password)).redirect('/adminPage');
+    if (email == "sagar@gmail.com" && password == "asdf") {
+      res
+        .cookie("admin", JSON.stringify(email, password))
+        .redirect("/adminPage");
     } else {
-      res.json({status:400,valid:"Invalid Email!"})
+      res.json({ status: 400, valid: "Invalid Email!" });
     }
     // const isMatch = await bcrypt.compare(password, admin.password);
     // if (!isMatch) return res.status(401).send("❌ Invalid credentials");
-    
   } catch (error) {
     console.error(error);
     res.status(500).send("⚠️ Server error during admin login");
@@ -64,12 +83,31 @@ app.post("/admin", async (req, res) => {
 });
 
 // Doctor Register
-app.post("/doctor", async (req, res) => {
-  const { name, phone, gender } = req.body;
+app.post("/doctor", upload.single("idproof"), async (req, res) => {
+  const { name, email, phone, gender } = req.body;
+  // console.log(req.file.path);
+  console.log(JSON.stringify(req.body));
+  const file = req.file.path;
+
   try {
+    const cloudinaryRes = await cloudinary.uploader.upload(file, {
+      folder: "Rahul",
+    });
+    console.log(cloudinaryRes);
+
+    const URL = cloudinaryRes.secure_url;
+    const doctorid = generateCode();
+    await doctor.create({
+      name: name,
+      email: email,
+      phone: phone,
+      gender: gender,
+      idproof: URL,
+      doctorid: doctorid,
+    });
     // const newDoctor = new Doctor({ name, phone, gender });
     // await newDoctor.save();
-    res.send("✅ Doctor registered successfully!");
+    res.redirect("/verifyDoctor");
   } catch (error) {
     console.error(error);
     res.status(500).send("⚠️ Error registering doctor");
@@ -92,9 +130,10 @@ app.get("/patientVerify", async (req, res) => {
   }
 });
 
-app.use('/adminPage',adminRouter);
+app.use("/adminPage", adminRouter);
 
+app.use("/verifyDoctor", doctorRouter);
 // Server listen
-app.listen(PORT,
-     () => console.log(`🚀 Server running on http://localhost:${PORT}`)
-    );
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`),
+);

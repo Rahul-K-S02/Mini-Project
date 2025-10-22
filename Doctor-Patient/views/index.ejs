@@ -47,30 +47,36 @@
     </form>
 
     <!-- Doctor Register -->
-    <form id="doctorForm" class="hidden space-y-4" action="/doctor" method="POST">
+    <form id="doctorForm" class="hidden space-y-4" action="/doctor" method="POST" enctype="multipart/form-data">
       <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Doctor Register</h1>
       <div>
         <label for="docName" class="block text-gray-700 font-medium mb-1">Full Name :</label>
         <input type="text" id="docName" placeholder="Enter your full name"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="name"/>
+      </div>
+      <div>
+        <label for="docName" class="block text-gray-700 font-medium mb-1">Email :</label>
+        <input type="email" id="docName" placeholder="Enter your email"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="email"/>
       </div>
       <div>
         <label for="docPhone" class="block text-gray-700 font-medium mb-1">Phone Number :</label>
         <input type="number" id="docPhone" placeholder="Enter your phone number"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="phone"/>
       </div>
-      <fieldset class="flex gap-4">
-        <label class="flex items-center text-gray-700 font-medium">
-          <input type="radio" name="gender" class="mr-2 accent-blue-600" /> Male
-        </label>
-        <label class="flex items-center text-gray-700 font-medium">
-          <input type="radio" name="gender" class="mr-2 accent-blue-600" /> Female
-        </label>
-      </fieldset>
+       <fieldset class="flex gap-4">
+    <legend class="block text-gray-700 font-medium mb-2">Gender :</legend>
+    <label class="flex items-center text-gray-700 font-medium">
+      <input type="radio" name="gender" class="mr-2 accent-blue-600" value="male" required/> Male
+    </label>
+    <label class="flex items-center text-gray-700 font-medium">
+      <input type="radio" name="gender" class="mr-2 accent-blue-600" value="female" required/> Female
+    </label>
+  </fieldset>
       <div>
         <label for="idProof" class="block text-gray-700 font-medium mb-1">Upload your ID proof:</label>
         <input type="file" id="idProof"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="idproof" required/>
       </div>
       <p class="text-sm text-center text-gray-600 mt-4">
         Already Registered?
