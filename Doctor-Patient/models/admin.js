@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const adminSchema = new mongoose.Schema({
     email: {
         type: String,
-        reqired: true,
+        required: true,
         unique: true
     },
     password: {
@@ -13,4 +13,4 @@ const adminSchema = new mongoose.Schema({
 
 })
 
-export default admin = mongoose.model('admin',adminSchema);
+export const admin = mongoose.model('admin',adminSchema);
