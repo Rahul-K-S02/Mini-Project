@@ -23,6 +23,8 @@
     "express": "^5.1.0",
     "mongoose": "^8.19.1",
     "multer": "^2.0.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

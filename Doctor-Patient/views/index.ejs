@@ -6,6 +6,14 @@
   <title>Healthcare Portal</title>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 </head>
 
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex justify-center items-center p-6">
@@ -92,20 +100,25 @@
     <form id="patientForm" class="hidden space-y-4" action="/patientVerify" method="GET">
       <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Patient Register</h1>
       <div>
-        <label for="aadhar" class="block text-gray-700 font-medium mb-1">Aadhar Number :</label>
+        <label for="aadhar" class="block text-gray-700 font-medium mb-1">Email : </label>
         <input type="number" id="aadhar" placeholder="Enter your aadhar number"
           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="aadhar"/>
       </div>
-      <p class="text-center text-gray-500 font-medium">OR</p>
-      <div>
-        <label for="phone" class="block text-gray-700 font-medium mb-1">Phone Number :</label>
-        <input type="number" id="phone" placeholder="Enter your phone number"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="phone"/>
-      </div>
+      
       <button
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-2 transition duration-200">
         Register
       </button>
+
+      <p class="text-center text-gray-500 font-medium">OR</p>
+
+      <div
+          class="text-center border border-black py-2 rounded"
+          style="cursor: pointer"
+          onclick="GoogleAuth()"
+        >
+          <i class="fa-brands fa-google me-2"></i> Login with Google
+        </div>
     </form>
   </div>
 
@@ -137,6 +150,11 @@
     adminBtn.addEventListener('click', () => showForm(0));
     doctorBtn.addEventListener('click', () => showForm(1));
     patientBtn.addEventListener('click', () => showForm(2));
+
+
+    function GoogleAuth() {
+        window.location.href="http://localhost:9009/patientPage/auth/google"
+      }
   </script>
 </body>
 </html>
