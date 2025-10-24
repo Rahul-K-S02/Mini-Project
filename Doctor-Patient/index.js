@@ -13,6 +13,7 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import doctorRouter from "./routes/doctor.js";
 import generateCode from "./services/uniqueID.js";
+import patientRouter from "./routes/patient.js";
 dotenv.config();
 // Database connection
 try {
@@ -117,18 +118,21 @@ app.post("/doctor", upload.single("idproof"), async (req, res) => {
 // Patient Verify
 app.get("/patientVerify", async (req, res) => {
   const { aadhar, phone } = req.query;
+  console.log
   try {
     if (!aadhar && !phone)
       return res.status(400).send("⚠️ Please provide Aadhar or phone number");
 
     // const newPatient = new Patient({ aadhar, phone });
     // await newPatient.save();
-    res.send("✅ Patient verified successfully!");
+    res.redirect('/patientPage');
   } catch (error) {
     console.error(error);
     res.status(500).send("⚠️ Error verifying patient");
   }
 });
+
+app.use('/patientPage',patientRouter);
 
 app.use("/adminPage", adminRouter);
 
