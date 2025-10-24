@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
 router.get('/approve-doctor/:doctorid',async (req,res) => {
     const doctorID = req.params.doctorid;
     try {
-        const updatedDoctor = await doctor.findOneAndUpdate(
+        await doctor.findOneAndUpdate(
             { doctorid : doctorID }, 
             { $set: { status: "approved" } },
         );
@@ -44,7 +44,7 @@ router.get('/approve-doctor/:doctorid',async (req,res) => {
 router.get('/reject-doctor/:doctorid',async (req,res) => {
     const doctorID = req.params.doctorid;
     try {
-        const updatedDoctor = await doctor.findOneAndUpdate(
+        await doctor.findOneAndUpdate(
             { doctorid : doctorID }, 
             { $set: { status: "rejected" } },
         );
