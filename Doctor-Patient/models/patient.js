@@ -4,7 +4,6 @@ const patientSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   age: {
     type: Number,
@@ -14,12 +13,15 @@ const patientSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
   },
   address: {
     type: String,
-    required: true,
   },
+  verified: {
+    type: String,
+    enum:["google","normal"],
+    default:"normal"
+  }
 });
 
-export default patient = mongoose.model("patient", patientSchema);
+export const patient = mongoose.model("patient", patientSchema);
