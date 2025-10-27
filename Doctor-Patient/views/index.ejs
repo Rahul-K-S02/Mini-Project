@@ -3,158 +3,732 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthcare Portal</title>
+  <title>MediCare Hub - Advanced Healthcare Platform</title>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            secondary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex justify-center items-center p-6">
-  <div class="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8 transition-all duration-300">
-    <!-- Tabs -->
-    <div class="flex justify-between items-center mb-8 bg-blue-50 p-2 rounded-xl">
-      <button id="adminBtn"
-        class="tab-btn flex-1 py-2 text-sm sm:text-base font-semibold text-blue-700 bg-white rounded-lg shadow transition-all duration-200">
-        Admin Login
-      </button>
-      <button id="doctorBtn"
-        class="tab-btn flex-1 py-2 text-sm sm:text-base font-medium text-gray-600 hover:bg-white hover:shadow rounded-lg transition-all duration-200">
-        Doctor Register
-      </button>
-      <button id="patientBtn"
-        class="tab-btn flex-1 py-2 text-sm sm:text-base font-medium text-gray-600 hover:bg-white hover:shadow rounded-lg transition-all duration-200">
-        Patient Register
-      </button>
-    </div>
-
-    <!-- Forms -->
-    <!-- Admin Login -->
-    <form id="adminForm" class="space-y-4" action="/admin" method="POST">
-      <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Admin Login</h1>
-      <div>
-        <label for="adminEmail" class="block text-gray-700 font-medium mb-1">Email :</label>
-        <input type="email" id="adminEmail" placeholder="Enter your email..."
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="email"/>
-      </div>
-      <div>
-        <label for="adminPassword" class="block text-gray-700 font-medium mb-1">Password :</label>
-        <input type="password" id="adminPassword" placeholder="Enter your password.."
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="password"/>
-      </div>
-      <button
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-2 transition duration-200">
-        Login
-      </button>
-    </form>
-
-    <!-- Doctor Register -->
-    <form id="doctorForm" class="hidden space-y-4" action="/doctor" method="POST" enctype="multipart/form-data">
-      <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Doctor Register</h1>
-      <div>
-        <label for="docName" class="block text-gray-700 font-medium mb-1">Full Name :</label>
-        <input type="text" id="docName" placeholder="Enter your full name"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="name"/>
-      </div>
-      <div>
-        <label for="docName" class="block text-gray-700 font-medium mb-1">Email :</label>
-        <input type="email" id="docName" placeholder="Enter your email"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="email"/>
-      </div>
-      <div>
-        <label for="docPhone" class="block text-gray-700 font-medium mb-1">Phone Number :</label>
-        <input type="number" id="docPhone" placeholder="Enter your phone number"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="phone"/>
-      </div>
-       <fieldset class="flex gap-4">
-    <legend class="block text-gray-700 font-medium mb-2">Gender :</legend>
-    <label class="flex items-center text-gray-700 font-medium">
-      <input type="radio" name="gender" class="mr-2 accent-blue-600" value="male" required/> Male
-    </label>
-    <label class="flex items-center text-gray-700 font-medium">
-      <input type="radio" name="gender" class="mr-2 accent-blue-600" value="female" required/> Female
-    </label>
-  </fieldset>
-      <div>
-        <label for="idProof" class="block text-gray-700 font-medium mb-1">Upload your ID proof:</label>
-        <input type="file" id="idProof"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="idproof" required/>
-      </div>
-      <p class="text-sm text-center text-gray-600 mt-4">
-        Already Registered?
-        <a href="#" class="text-blue-600 hover:underline font-medium">Login</a>
-      </p>
-      <button
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-2 transition duration-200">
-        Register
-      </button>
-    </form>
-
-    <!-- Patient Register -->
-    <form id="patientForm" class="hidden space-y-4" action="/patientVerify" method="GET">
-      <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Patient Register</h1>
-      <div>
-        <label for="aadhar" class="block text-gray-700 font-medium mb-1">Email : </label>
-        <input type="number" id="aadhar" placeholder="Enter your aadhar number"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="aadhar"/>
-      </div>
-      
-      <button
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-2 transition duration-200">
-        Register
-      </button>
-
-      <p class="text-center text-gray-500 font-medium">OR</p>
-
-      <div
-          class="text-center border border-black py-2 rounded"
-          style="cursor: pointer"
-          onclick="GoogleAuth()"
-        >
-          <i class="fa-brands fa-google me-2"></i> Login with Google
+<body class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 font-inter">
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%233b82f6" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+    
+    <!-- Navigation -->
+    <nav class="relative z-10 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center">
+            <i class="fas fa-stethoscope text-white text-lg"></i>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-800">MediCare Hub</h1>
         </div>
-    </form>
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#features" class="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
+          <a href="#about" class="text-gray-600 hover:text-primary-600 transition-colors">About</a>
+          <a href="#contact" class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-12">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left Side - Hero Text -->
+        <div class="text-center lg:text-left">
+          <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Advanced
+            <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+              Healthcare
+            </span>
+            Platform
+          </h1>
+          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+            Connect with top-rated doctors, manage appointments, and access your medical records all in one place. 
+            Experience the future of healthcare with our AI-powered platform.
+          </p>
+          
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6 mb-8">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600">500+</div>
+              <div class="text-sm text-gray-600">Verified Doctors</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600">10K+</div>
+              <div class="text-sm text-gray-600">Happy Patients</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600">24/7</div>
+              <div class="text-sm text-gray-600">Support</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side - Login/Register Forms -->
+        <div class="bg-white/80 backdrop-blur-sm shadow-2xl rounded-3xl p-8 border border-white/20">
+          <!-- Tabs -->
+          <div class="flex justify-between items-center mb-8 bg-gray-50 p-2 rounded-2xl">
+            <button id="adminBtn"
+              class="tab-btn flex-1 py-3 text-sm font-semibold text-primary-700 bg-white rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
+              <i class="fas fa-user-shield mr-2"></i>
+              Admin
+            </button>
+            <button id="doctorBtn"
+              class="tab-btn flex-1 py-3 text-sm font-medium text-gray-600 hover:bg-white hover:shadow-sm rounded-xl transition-all duration-300">
+              <i class="fas fa-user-md mr-2"></i>
+              Doctor
+            </button>
+            <button id="patientBtn"
+              class="tab-btn flex-1 py-3 text-sm font-medium text-gray-600 hover:bg-white hover:shadow-sm rounded-xl transition-all duration-300">
+              <i class="fas fa-user-injured mr-2"></i>
+              Patient
+            </button>
+          </div>
+
+          <!-- Forms -->
+          <!-- Admin Login -->
+          <form id="adminForm" class="space-y-6" action="/api/auth/login/admin" method="POST">
+            <div class="text-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">Admin Portal</h2>
+              <p class="text-gray-600">Access administrative controls</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div>
+                <label for="adminEmail" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-envelope mr-2 text-primary-500"></i>Email Address
+                </label>
+                <input type="email" id="adminEmail" placeholder="admin@medicare.com"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="email" required/>
+              </div>
+              
+              <div>
+                <label for="adminPassword" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-lock mr-2 text-primary-500"></i>Password
+                </label>
+                <div class="relative">
+                  <input type="password" id="adminPassword" placeholder="Enter your password"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white pr-12" 
+                    name="password" required/>
+                  <button type="button" data-toggle-password="adminPassword" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Access Admin Portal
+            </button>
+          </form>
+
+          <!-- Doctor Registration -->
+          <form id="doctorForm" class="hidden space-y-6" action="/api/auth/register/doctor" method="POST" enctype="multipart/form-data">
+            <div class="text-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">Doctor Registration</h2>
+              <p class="text-gray-600">Join our network of healthcare professionals</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="docName" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-user mr-2 text-primary-500"></i>Full Name
+                </label>
+                <input type="text" id="docName" placeholder="Dr. John Smith"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="name" required/>
+              </div>
+              
+              <div>
+                <label for="docEmail" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-envelope mr-2 text-primary-500"></i>Email Address
+                </label>
+                <input type="email" id="docEmail" placeholder="doctor@example.com"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="email" required/>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="docPhone" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-phone mr-2 text-primary-500"></i>Phone Number
+                </label>
+                <input type="tel" id="docPhone" placeholder="+1 (555) 123-4567"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="phone" required/>
+              </div>
+              
+              <div>
+                <label for="docPassword" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-lock mr-2 text-primary-500"></i>Password
+                </label>
+                <div class="relative">
+                  <input type="password" id="docPassword" placeholder="Create a strong password"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white pr-12" 
+                    name="password" required/>
+                  <button type="button" data-toggle-password="docPassword" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="specialization" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-stethoscope mr-2 text-primary-500"></i>Specialization
+                </label>
+                <select id="specialization" name="specialization" required
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white">
+                  <option value="">Select Specialization</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Orthopedics">Orthopedics</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Psychiatry">Psychiatry</option>
+                  <option value="General Medicine">General Medicine</option>
+                  <option value="Gynecology">Gynecology</option>
+                  <option value="Ophthalmology">Ophthalmology</option>
+                  <option value="ENT">ENT</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="experience" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-calendar-alt mr-2 text-primary-500"></i>Experience (Years)
+                </label>
+                <input type="number" id="experience" placeholder="5" min="0"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="experience" required/>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="qualification" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-graduation-cap mr-2 text-primary-500"></i>Qualification
+                </label>
+                <input type="text" id="qualification" placeholder="MD, MBBS"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="qualification" required/>
+              </div>
+              
+              <div>
+                <label for="consultationFee" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-dollar-sign mr-2 text-primary-500"></i>Consultation Fee
+                </label>
+                <input type="number" id="consultationFee" placeholder="100" min="0"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="consultationFee" required/>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-3">
+                <i class="fas fa-venus-mars mr-2 text-primary-500"></i>Gender
+              </label>
+              <div class="flex gap-6">
+                <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                  <input type="radio" name="gender" class="mr-3 accent-primary-600" value="male" required/> 
+                  <i class="fas fa-mars mr-2 text-blue-500"></i>Male
+                </label>
+                <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                  <input type="radio" name="gender" class="mr-3 accent-primary-600" value="female" required/> 
+                  <i class="fas fa-venus mr-2 text-pink-500"></i>Female
+                </label>
+                <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                  <input type="radio" name="gender" class="mr-3 accent-primary-600" value="other" required/> 
+                  <i class="fas fa-transgender mr-2 text-purple-500"></i>Other
+                </label>
+              </div>
+            </div>
+            
+            <div>
+              <label for="bio" class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-user-md mr-2 text-primary-500"></i>Bio (Optional)
+              </label>
+              <textarea id="bio" name="bio" rows="3" placeholder="Tell us about your medical background and expertise..."
+                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white resize-none"></textarea>
+            </div>
+            
+            <div>
+              <label for="idProof" class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-file-upload mr-2 text-primary-500"></i>Upload ID Proof
+              </label>
+              <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary-400 transition-colors">
+                <input type="file" id="idProof" name="idproof" accept="image/*,.pdf" required
+                  class="hidden file-input"/>
+                <label for="idProof" class="cursor-pointer">
+                  <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-600 mb-2">Click to upload your ID proof</p>
+                  <p class="text-sm text-gray-500">PNG, JPG, PDF up to 5MB</p>
+                </label>
+              </div>
+              <div id="fileInfo" class="hidden mt-2 text-sm text-green-600"></div>
+            </div>
+            
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <i class="fas fa-user-plus mr-2"></i>
+              Register as Doctor
+            </button>
+            
+            <p class="text-sm text-center text-gray-600">
+              Already registered? 
+              <a href="#" class="text-primary-600 hover:underline font-medium show-login">Login here</a>
+            </p>
+          </form>
+
+          <!-- Patient Registration -->
+          <form id="patientForm" class="hidden space-y-6" action="/api/auth/register/patient" method="POST">
+            <div class="text-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">Patient Registration</h2>
+              <p class="text-gray-600">Join our healthcare community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="patientName" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-user mr-2 text-primary-500"></i>Full Name
+                </label>
+                <input type="text" id="patientName" placeholder="John Doe"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="name" required/>
+              </div>
+              
+              <div>
+                <label for="patientEmail" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-envelope mr-2 text-primary-500"></i>Email Address
+                </label>
+                <input type="email" id="patientEmail" placeholder="patient@example.com"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="email" required/>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="patientPassword" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-lock mr-2 text-primary-500"></i>Password
+                </label>
+                <div class="relative">
+                  <input type="password" id="patientPassword" placeholder="Create a strong password"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white pr-12" 
+                    name="password" required/>
+                  <button type="button" data-toggle-password="patientPassword" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <label for="patientAge" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-calendar-alt mr-2 text-primary-500"></i>Age
+                </label>
+                <input type="number" id="patientAge" placeholder="25" min="0" max="120"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="age" required/>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="patientPhone" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-phone mr-2 text-primary-500"></i>Phone Number
+                </label>
+                <input type="tel" id="patientPhone" placeholder="+1 (555) 123-4567"
+                  class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white" 
+                  name="phone" required/>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3">
+                  <i class="fas fa-venus-mars mr-2 text-primary-500"></i>Gender
+                </label>
+                <div class="flex gap-4">
+                  <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                    <input type="radio" name="gender" class="mr-2 accent-primary-600" value="male" required/> 
+                    <i class="fas fa-mars mr-1 text-blue-500"></i>Male
+                  </label>
+                  <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                    <input type="radio" name="gender" class="mr-2 accent-primary-600" value="female" required/> 
+                    <i class="fas fa-venus mr-1 text-pink-500"></i>Female
+                  </label>
+                  <label class="flex items-center text-gray-700 font-medium cursor-pointer">
+                    <input type="radio" name="gender" class="mr-2 accent-primary-600" value="other" required/> 
+                    <i class="fas fa-transgender mr-1 text-purple-500"></i>Other
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <i class="fas fa-user-plus mr-2"></i>
+              Register as Patient
+            </button>
+            
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+              </div>
+            </div>
+            
+            <button id="googleBtn" type="button"
+              class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center shadow-sm hover:shadow-md">
+              <i class="fab fa-google mr-3 text-red-500"></i>
+              Continue with Google
+            </button>
+            
+            <p class="text-sm text-center text-gray-600">
+              Already have an account? 
+              <a href="#" class="text-primary-600 hover:underline font-medium show-login">Login here</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- JavaScript for toggling -->
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose MediCare Hub?</h2>
+        <p class="text-xl text-gray-600">Advanced features for modern healthcare</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-8 rounded-2xl border border-primary-200">
+          <div class="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-video text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Video Consultations</h3>
+          <p class="text-gray-600">Connect with doctors through secure video calls from the comfort of your home.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 p-8 rounded-2xl border border-secondary-200">
+          <div class="w-16 h-16 bg-secondary-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-calendar-check text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Smart Scheduling</h3>
+          <p class="text-gray-600">AI-powered appointment scheduling that finds the best time slots for you.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl border border-green-200">
+          <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-file-medical text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Digital Prescriptions</h3>
+          <p class="text-gray-600">Secure digital prescriptions that you can access anytime, anywhere.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border border-purple-200">
+          <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-chart-line text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Health Analytics</h3>
+          <p class="text-gray-600">Track your health metrics and get personalized insights.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl border border-orange-200">
+          <div class="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-bell text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Smart Notifications</h3>
+          <p class="text-gray-600">Get timely reminders for appointments, medications, and health checkups.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-2xl border border-red-200">
+          <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mb-6">
+            <i class="fas fa-shield-alt text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Secure & Private</h3>
+          <p class="text-gray-600">Your health data is protected with enterprise-grade security.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-stethoscope text-white text-lg"></i>
+            </div>
+            <h3 class="text-xl font-bold">MediCare Hub</h3>
+          </div>
+          <p class="text-gray-400">Advanced healthcare platform connecting patients with top-rated doctors.</p>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Find Doctors</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Book Appointment</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Health Records</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Emergency</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Contact Info</h4>
+          <div class="space-y-2 text-gray-400">
+            <p><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope mr-2"></i> support@medicarehub.com</p>
+            <p><i class="fas fa-map-marker-alt mr-2"></i> 123 Healthcare St, Medical City</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2024 MediCare Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript (all event listeners moved here — CSP-friendly) -->
   <script>
-    const adminBtn = document.getElementById('adminBtn');
-    const doctorBtn = document.getElementById('doctorBtn');
-    const patientBtn = document.getElementById('patientBtn');
+    // Wait till DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      // Tab buttons & forms
+      const adminBtn = document.getElementById('adminBtn');
+      const doctorBtn = document.getElementById('doctorBtn');
+      const patientBtn = document.getElementById('patientBtn');
 
-    const adminForm = document.getElementById('adminForm');
-    const doctorForm = document.getElementById('doctorForm');
-    const patientForm = document.getElementById('patientForm');
+      const adminForm = document.getElementById('adminForm');
+      const doctorForm = document.getElementById('doctorForm');
+      const patientForm = document.getElementById('patientForm');
 
-    const buttons = [adminBtn, doctorBtn, patientBtn];
-    const forms = [adminForm, doctorForm, patientForm];
+      const buttons = [adminBtn, doctorBtn, patientBtn];
+      const forms = [adminForm, doctorForm, patientForm];
 
-    function showForm(index) {
-      forms.forEach((form, i) => {
-        form.classList.toggle('hidden', i !== index);
-        buttons[i].classList.toggle('bg-white', i === index);
-        buttons[i].classList.toggle('text-blue-700', i === index);
-        buttons[i].classList.toggle('font-semibold', i === index);
-        buttons[i].classList.toggle('shadow', i === index);
-        buttons[i].classList.toggle('text-gray-600', i !== index);
-        buttons[i].classList.toggle('font-medium', i !== index);
-      });
-    }
+      function showForm(index) {
+        forms.forEach((form, i) => {
+          form.classList.toggle('hidden', i !== index);
 
-    adminBtn.addEventListener('click', () => showForm(0));
-    doctorBtn.addEventListener('click', () => showForm(1));
-    patientBtn.addEventListener('click', () => showForm(2));
-
-
-    function GoogleAuth() {
-        window.location.href="http://localhost:9009/patientPage/auth/google"
+          // Update button styles
+          if (i === index) {
+            buttons[i].classList.add('bg-white', 'text-primary-700', 'font-semibold', 'shadow-sm');
+            buttons[i].classList.remove('text-gray-600', 'font-medium');
+          } else {
+            buttons[i].classList.remove('bg-white', 'text-primary-700', 'font-semibold', 'shadow-sm');
+            buttons[i].classList.add('text-gray-600', 'font-medium');
+          }
+        });
       }
+
+      // Attach tab listeners
+      adminBtn.addEventListener('click', () => showForm(0));
+      doctorBtn.addEventListener('click', () => showForm(1));
+      patientBtn.addEventListener('click', () => showForm(2));
+
+      // Password toggle functionality (data-toggle-password attribute)
+      document.querySelectorAll('[data-toggle-password]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          // If the click target is an <i> inside the button, ensure we still get the button element
+          const targetBtn = e.currentTarget;
+          const inputId = targetBtn.getAttribute('data-toggle-password');
+          const input = document.getElementById(inputId);
+          if (!input) return;
+          const icon = targetBtn.querySelector('i');
+
+          if (input.type === 'password') {
+            input.type = 'text';
+            if (icon) {
+              icon.classList.remove('fa-eye');
+              icon.classList.add('fa-eye-slash');
+            }
+          } else {
+            input.type = 'password';
+            if (icon) {
+              icon.classList.remove('fa-eye-slash');
+              icon.classList.add('fa-eye');
+            }
+          }
+        });
+      });
+
+      // File input handling (file-input class)
+      document.querySelectorAll('.file-input').forEach(input => {
+        input.addEventListener('change', (e) => {
+          const fileInfo = document.getElementById('fileInfo');
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            const fileSizeMb = (file.size / 1024 / 1024).toFixed(2);
+            fileInfo.innerHTML = `<i class="fas fa-check mr-2"></i>Selected: ${file.name} (${fileSizeMb} MB)`;
+            fileInfo.classList.remove('hidden');
+          } else {
+            fileInfo.classList.add('hidden');
+            fileInfo.innerHTML = '';
+          }
+        });
+      });
+
+      // Google auth button
+      const googleBtn = document.getElementById('googleBtn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          // redirect to your server route
+          window.location.href = "http://localhost:5000/api/auth/google";
+          console.log("Google Auth triggered");
+        });
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If anchor also has class 'show-login', we handle that separately
+          if (this.classList.contains('show-login')) return;
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // showLoginForm links (class "show-login") -> show admin login (index 0)
+      document.querySelectorAll('.show-login').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          showForm(0); // shows Admin form — keep consistent with your previous use of showLoginForm()
+          // optionally scroll to form
+          adminForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+
+      // Form validation & submit handling
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+          // Note: we prevent default to run client-side validation first,
+          // then call form.submit() to let the server handle it if validation passes.
+          e.preventDefault();
+
+          const requiredFields = form.querySelectorAll('[required]');
+          let isValid = true;
+
+          requiredFields.forEach(field => {
+            // for file inputs and radios, validation differs slightly
+            if ((field.type === 'file' && field.files.length === 0) ||
+                (field.type === 'radio' && !form.querySelector(`input[name="${field.name}"]:checked`))) {
+              isValid = false;
+              field.classList.add('border-red-500');
+              field.classList.remove('border-gray-200');
+            } else if (field.type !== 'file' && field.type !== 'radio') {
+              if (!field.value || !String(field.value).trim()) {
+                isValid = false;
+                field.classList.add('border-red-500');
+                field.classList.remove('border-gray-200');
+              } else {
+                field.classList.remove('border-red-500');
+                field.classList.add('border-gray-200');
+              }
+            } else {
+              // checked or file present - mark ok
+              field.classList.remove('border-red-500');
+              field.classList.add('border-gray-200');
+            }
+          });
+
+          if (isValid) {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+              submitBtn.dataset.origHtml = submitBtn.innerHTML;
+              submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+              submitBtn.disabled = true;
+            }
+
+            // submit the form to the server
+            form.submit();
+          } else {
+            // optionally, focus first invalid field
+            const firstInvalid = form.querySelector('.border-red-500, :invalid');
+            if (firstInvalid) firstInvalid.focus();
+          }
+        });
+      });
+
+      // Add loading animation to buttons that are submit-type handled by click
+      document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.type === 'submit') {
+            this.classList.add('animate-pulse');
+          }
+        });
+      });
+
+      // Initialize default tab (Admin)
+      showForm(0);
+    });
   </script>
 </body>
 </html>
