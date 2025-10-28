@@ -1,43 +1,63 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-// import {createTokenForUser} from "../services/authentication.js"
-// import jwt from 'jsonwebtoken'
-import {patient} from "../models/patient.js";
+import { patient } from "../models/patient.js";
+import { generateToken } from "../middleware/auth.js";
 import { config } from "dotenv";
 config();
 
-
-passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.CALL_BACK_URL
-},
-async (accessToken,refreshToken,profile,done) => {
-    console.log(profile);
-    // console.log(profile["emails"].value);
+// Only initialize Google OAuth if credentials are provided
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.CALL_BACK_URL || "http://localhost:5000/api/auth/google/callback"
+    },
+    async (accessToken, refreshToken, profile, done) => {
+        console.log('Google OAuth profile:', profile);
         try {
             let google_email = profile.emails[0].value;
-            let patientName = await patient.findOne({email: google_email});
-            if(!patientName) {
-              await patient.create({
-                    name:profile.displayName,
+            let googleId = profile.id;
+            let patientUser = await patient.findOne({ email: google_email });
+            
+            if (!patientUser) {
+                patientUser = new patient({
+                    name: profile.displayName,
                     email: google_email,
-                })
+                    googleId: googleId,
+                    verified: 'google',
+                    age: 0,
+                    gender: 'other',
+                    phone: ''
+                });
+                await patientUser.save();
             }
 
-            // const token = jwt.sign({
-            //     id: user._id,
-            //     name: user.name,
-            //     email: user.email
-            // },{expiresIn: "1d"});
+            const token = generateToken({
+                userId: patientUser._id,
+                userType: 'patient',
+                email: patientUser.email
+            });
 
-            // const token = createTokenForUser(user);
-
-            return done();
-        } catch(e) {
-            return done(e,null);
+            return done(null, { user: patientUser, token });
+        } catch (error) {
+            console.error('Google OAuth error:', error);
+            return done(error, null);
         }
-    }
-))
+    }));
+    
+    console.log('✅ Google OAuth initialized');
+} else {
+    console.log('⚠️  Google OAuth not configured (CLIENT_ID or CLIENT_SECRET missing)');
+}
+
+// Serialize user for the session
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+// Deserialize user from the session
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
 
 export default passport;
