@@ -27,6 +27,12 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  specialization: {
+    type: String,
+  },
+  location:{
+    type:String,
+  }
 });
 
 export const doctor = mongoose.model("doctor", doctorSchema);

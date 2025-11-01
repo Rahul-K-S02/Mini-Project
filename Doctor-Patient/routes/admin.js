@@ -53,4 +53,4 @@ router.get('/reject-doctor/:doctorid',async (req,res) => {
         console.log(e);
     }
 })
-export const adminRouter = router;
+export const adminRouter = router;  

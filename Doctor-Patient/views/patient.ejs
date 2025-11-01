@@ -24,114 +24,37 @@
     <header class="bg-white shadow-sm border-b">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
+                <!-- Left: Logo and Title -->
                 <div class="flex items-center space-x-3">
                     <i class="fas fa-stethoscope text-blue-600 text-2xl"></i>
                     <h1 class="text-2xl font-bold text-gray-800">MediCare Hub</h1>
                 </div>
+
+                <!-- Right: User Info + MediAI Button -->
                 <div class="flex items-center space-x-4">
-                    <span class="text-gray-700">Welcome, <span class="font-semibold text-blue-600"><%= patientName || 'Patient' %></span></span>
+                    <span class="text-gray-700">
+                        Welcome, 
+                        <span class="font-semibold text-blue-600">
+                            <%= patientName || 'Patient' %>
+                        </span>
+                    </span>
+                    
+                    <!-- Avatar -->
                     <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-md">
                         <%= (patientName || 'P').charAt(0).toUpperCase() %>
                     </div>
+
+                    <!-- MediAI Button -->
+                    <a href="http://localhost:4040/mediAI/search" 
+                       class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full font-medium shadow-md hover:opacity-90 transition duration-200">
+                        <i class="fas fa-robot mr-2"></i>MediAI
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- Left Column - Patient Health Information -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sticky top-4">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i class="fas fa-user-injured mr-3 text-blue-500"></i>
-                        Health Assessment
-                    </h2>
-
-                    <!-- Symptoms Form -->
-                    <form action="/submit-symptoms" method="POST" class="space-y-6">
-                        <!-- Current Symptoms -->
-                        <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-thermometer-half mr-2 text-red-500"></i>
-                                Current Symptoms
-                            </label>
-                            <div class="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
-                                <% const symptoms = ['Fever', 'Headache', 'Cough', 'Cold', 'Body Pain', 'Fatigue', 'Nausea', 'Dizziness', 'Sore Throat', 'Shortness of Breath', 'Chest Pain', 'Abdominal Pain']; %>
-                                <% symptoms.forEach(symptom => { %>
-                                    <label class="flex items-center p-2 hover:bg-white rounded transition duration-150">
-                                        <input type="checkbox" name="symptoms" value="<%= symptom.toLowerCase() %>" 
-                                               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-3 text-sm text-gray-700 font-medium"><%= symptom %></span>
-                                    </label>
-                                <% }); %>
-                            </div>
-                        </div>
-
-                        <!-- Existing Diseases -->
-                        <div class="bg-green-50 rounded-lg p-4 border border-green-100">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-file-medical mr-2 text-green-600"></i>
-                                Medical History
-                            </label>
-                            <div class="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
-                                <% const diseases = ['Diabetes', 'High Blood Pressure', 'Asthma', 'Heart Disease', 'Thyroid', 'Arthritis', 'Migraine', 'Kidney Disease', 'Liver Disease', 'Cancer History', 'Mental Health', 'Allergies']; %>
-                                <% diseases.forEach(disease => { %>
-                                    <label class="flex items-center p-2 hover:bg-white rounded transition duration-150">
-                                        <input type="checkbox" name="diseases" value="<%= disease.toLowerCase() %>" 
-                                               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-3 text-sm text-gray-700 font-medium"><%= disease %></span>
-                                    </label>
-                                <% }); %>
-                            </div>
-                        </div>
-
-                        <!-- Additional Notes -->
-                        <div class="bg-purple-50 rounded-lg p-4 border border-purple-100">
-                            <label for="notes" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                                <i class="fas fa-notes-medical mr-2 text-purple-600"></i>
-                                Additional Notes
-                            </label>
-                            <textarea id="notes" name="notes" rows="3" 
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" 
-                                      placeholder="Describe your symptoms in detail, duration, severity..."></textarea>
-                        </div>
-
-                        <!-- Emergency Level -->
-                        <div class="bg-orange-50 rounded-lg p-4 border border-orange-100">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-exclamation-triangle mr-2 text-orange-500"></i>
-                                Urgency Level
-                            </label>
-                            <div class="flex space-x-4 justify-between">
-                                <label class="flex flex-col items-center cursor-pointer">
-                                    <input type="radio" name="urgency" value="low" class="text-green-600 focus:ring-green-500" checked>
-                                    <span class="mt-1 text-xs font-medium text-green-600">Low</span>
-                                    <div class="w-8 h-2 bg-green-200 rounded-full mt-1"></div>
-                                </label>
-                                <label class="flex flex-col items-center cursor-pointer">
-                                    <input type="radio" name="urgency" value="medium" class="text-yellow-600 focus:ring-yellow-500">
-                                    <span class="mt-1 text-xs font-medium text-yellow-600">Medium</span>
-                                    <div class="w-8 h-2 bg-yellow-200 rounded-full mt-1"></div>
-                                </label>
-                                <label class="flex flex-col items-center cursor-pointer">
-                                    <input type="radio" name="urgency" value="high" class="text-red-600 focus:ring-red-500">
-                                    <span class="mt-1 text-xs font-medium text-red-600">High</span>
-                                    <div class="w-8 h-2 bg-red-200 rounded-full mt-1"></div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" 
-                                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center shadow-lg transform hover:scale-105">
-                            <i class="fas fa-search-medical mr-3"></i>
-                            Find Suitable Doctors
-                        </button>
-                    </form>
-                </div>
-            </div>
-
             <!-- Right Column - Doctors List -->
             <div class="lg:col-span-3">
                 <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
@@ -227,7 +150,9 @@
 
                                             <!-- Action Buttons -->
                                             <div class="flex space-x-3 pt-4 border-t border-gray-100">
-                                                <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl text-sm font-semibold transition duration-200 flex items-center justify-center shadow-md">
+                                                <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl text-sm font-semibold transition duration-200 flex items-center justify-center shadow-md book-appointment-btn" 
+                                                        data-doctor-id="<%= doctor.doctorid %>" 
+                                                        data-doctor-name="<%= doctor.name %>">
                                                     <i class="fas fa-calendar-check mr-2"></i>
                                                     Book Appointment
                                                 </button>
@@ -269,6 +194,78 @@
                         </div>
                     <% } %>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-t-2xl p-6 text-white">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-calendar-plus mr-3"></i>
+                        Book Appointment
+                    </h3>
+                    <button id="close-modal" class="text-white hover:text-gray-200 transition duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <p class="mt-2 text-blue-100">Schedule an appointment with <span id="doctor-name" class="font-semibold"></span></p>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6">
+                <form id="appointment-form" action="patientPage/book-appointment" method="POST">
+                    <input type="hidden" id="doctor-id" name="doctorId">
+                    
+                    <!-- Urgency Level -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2 text-orange-500"></i>
+                            Urgency Level
+                        </label>
+                        <div class="flex space-x-4 justify-between">
+                            <label class="flex flex-col items-center cursor-pointer">
+                                <input type="radio" name="urgency" value="low" class="text-green-600 focus:ring-green-500" checked>
+                                <span class="mt-1 text-xs font-medium text-green-600">Low</span>
+                                <div class="w-8 h-2 bg-green-200 rounded-full mt-1"></div>
+                            </label>
+                            <label class="flex flex-col items-center cursor-pointer">
+                                <input type="radio" name="urgency" value="medium" class="text-yellow-600 focus:ring-yellow-500">
+                                <span class="mt-1 text-xs font-medium text-yellow-600">Medium</span>
+                                <div class="w-8 h-2 bg-yellow-200 rounded-full mt-1"></div>
+                            </label>
+                            <label class="flex flex-col items-center cursor-pointer">
+                                <input type="radio" name="urgency" value="high" class="text-red-600 focus:ring-red-500">
+                                <span class="mt-1 text-xs font-medium text-red-600">High</span>
+                                <div class="w-8 h-2 bg-red-200 rounded-full mt-1"></div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    
+                
+                    
+                    <!-- Additional Notes -->
+                    <div class="mb-6">
+                        <label for="appointment-notes" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                            <i class="fas fa-notes-medical mr-2 text-purple-600"></i>
+                            Additional Notes
+                        </label>
+                        <textarea id="appointment-notes" name="notes" rows="3" 
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" 
+                                  placeholder="Briefly describe the reason for your appointment..."></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center shadow-lg transform hover:scale-105">
+                        <i class="fas fa-paper-plane mr-3"></i>
+                        Book Appointment
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -327,6 +324,83 @@
                     });
                 });
             }
+
+            // Appointment Modal Functionality
+            const modal = document.getElementById('appointment-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const appointmentForm = document.getElementById('appointment-form');
+            const doctorNameSpan = document.getElementById('doctor-name');
+            const doctorIdInput = document.getElementById('doctor-id');
+            
+            // Open modal when clicking Book Appointment button
+            document.querySelectorAll('.book-appointment-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const doctorId = this.getAttribute('data-doctor-id');
+                    const doctorName = this.getAttribute('data-doctor-name');
+                    
+                    doctorIdInput.value = doctorId;
+                    doctorNameSpan.textContent = doctorName;
+                    
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        modal.querySelector('.bg-white').classList.remove('scale-95');
+                        modal.querySelector('.bg-white').classList.add('scale-100');
+                    }, 10);
+                });
+            });
+            
+            // Close modal when clicking close button
+            closeModalBtn.addEventListener('click', function() {
+                modal.querySelector('.bg-white').classList.remove('scale-100');
+                modal.querySelector('.bg-white').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.querySelector('.bg-white').classList.remove('scale-100');
+                    modal.querySelector('.bg-white').classList.add('scale-95');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                    }, 300);
+                }
+            });
+            
+            // Handle form submission
+            // appointmentForm.addEventListener('submit', function(e) {
+            //     e.preventDefault();
+                
+            //     // Get form data
+            //     const formData = new FormData(this);
+            //     const doctorId = formData.get('doctorId');
+            //     const urgency = formData.get('urgency');
+            //     const notes = formData.get('notes');
+
+        
+                
+            //     // In a real application, you would send this data to your server
+            //     console.log('Appointment Details:', {
+            //         doctorId,
+            //         urgency,
+            //         notes
+            //     });
+                
+            //     // Show success message
+            //     alert(`Appointment request sent to doctor ID: ${doctorId}\nWe'll contact you to confirm the appointment.`);
+                
+            //     // Close modal
+            //     modal.querySelector('.bg-white').classList.remove('scale-100');
+            //     modal.querySelector('.bg-white').classList.add('scale-95');
+            //     setTimeout(() => {
+            //         modal.classList.add('hidden');
+            //     }, 300);
+                
+            //     // Reset form
+            //     this.reset();
+            // });
         });
     </script>
 </body>

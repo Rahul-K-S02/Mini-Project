@@ -14,6 +14,7 @@ import { v2 as cloudinary } from "cloudinary";
 import doctorRouter from "./routes/doctor.js";
 import generateCode from "./services/uniqueID.js";
 import patientRouter from "./routes/patient.js";
+import { mediAI } from "./routes/cerebras.js";
 dotenv.config();
 // Database connection
 try {
@@ -56,6 +57,7 @@ app.set("view engine", "ejs");
 
 // Routes
 app.get("/", (req, res) => {
+  console.log("Home Page");
   res.render("index");
 });
 
@@ -118,10 +120,10 @@ app.post("/doctor", upload.single("idproof"), async (req, res) => {
 // Patient Verify
 app.get("/patientVerify", async (req, res) => {
   const { aadhar, phone } = req.query;
-  console.log
+  // console.log
   try {
-    if (!aadhar && !phone)
-      return res.status(400).send("⚠️ Please provide Aadhar or phone number");
+    // if (!aadhar && !phone)
+    //   return res.status(400).send("⚠️ Please provide Aadhar or phone number");
 
     // const newPatient = new Patient({ aadhar, phone });
     // await newPatient.save();
@@ -137,6 +139,8 @@ app.use('/patientPage',patientRouter);
 app.use("/adminPage", adminRouter);
 
 app.use("/verifyDoctor", doctorRouter);
+
+app.use("/mediAI", mediAI);
 // Server listen
 app.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`),

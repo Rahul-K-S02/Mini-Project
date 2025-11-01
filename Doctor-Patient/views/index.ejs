@@ -69,8 +69,18 @@
       </div>
       <div>
         <label for="docPhone" class="block text-gray-700 font-medium mb-1">Phone Number :</label>
-        <input type="number" id="docPhone" placeholder="Enter your phone number"
+        <input type="text" id="docPhone" placeholder="Enter your phone number"
           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="phone"/>
+      </div>
+      <div>
+        <label for="Location" class="block text-gray-700 font-medium mb-1">Location :</label>
+        <input type="text" id="Location" placeholder="Enter your Location"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="Location"/>
+      </div>
+      <div>
+        <label for="Specialization" class="block text-gray-700 font-medium mb-1">Specialization :</label>
+        <input type="type" id="Specialization" placeholder="Enter your Specialization"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" name="Specialization"/>
       </div>
        <fieldset class="flex gap-4">
     <legend class="block text-gray-700 font-medium mb-2">Gender :</legend>
@@ -153,7 +163,7 @@
 
 
     function GoogleAuth() {
-        window.location.href="http://localhost:9009/patientPage/auth/google"
+        window.location.href="http://localhost:4040/patientPage/auth/google"
       }
   </script>
 </body>
