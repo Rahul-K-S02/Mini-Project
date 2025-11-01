@@ -34,4 +34,10 @@ patientRouter.get('/findNearDoctor',async (req,res) => {
     });
 })
 
+
+patientRouter.post('/book-appointment',(req,res) => {
+    const data = req.body;
+    console.log(data);
+    res.send("Booked successfully!");
+})
 export default patientRouter;
